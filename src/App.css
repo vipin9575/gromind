@@ -1,0 +1,43 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #632b90;
+  --secondary-color: #000000;
+  --main-white-color: #ffffff;
+  --main-blue-color: #005691;
+  --secondary-blue-color: #00569199;
+  --main-gray-color: #636363;
+  --secondary-gray-color: #f6f8f9;
+  --main-red-color: #9e2424;
+}
+
+body {
+  overflow: scroll;
+  overflow-x: hidden;
+  font-family: "Poppins", sans-serif;
+}
+
+.carousel .control-dots .dot {
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 0 !important;
+}
+
+.heroSection {
+  position: relative;
+  padding-bottom: 40px;
+}
+
+.heroSection .carousel.carousel-slider {
+  overflow: visible;
+}
+
+.heroSection .carousel .control-dots {
+  bottom: -40px;
+}
