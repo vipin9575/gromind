@@ -1,9 +1,25 @@
 import { Box, Container, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import Timers from "../Timers";
+// import Timers from "../Timers";
 import CourseRegistrationForm from "../CourseRegistrationForm";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 
 const RegistrationBanner = () => {
+  const handleFormSubmit = async (formData) => {
+    try {
+      const response = await axios.post(
+        "https://api.gromindacademy.com/contact-us",
+        formData
+      );
+      if (response.status === 200)
+        toast.success("Form submitted successfully!");
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error("An error occurred while submitting the form.");
+    }
+  };
+
   return (
     <Box bgcolor="var(--secondary-blue-color)" py={8}>
       <Container maxWidth="lg">
@@ -21,20 +37,20 @@ const RegistrationBanner = () => {
             }}
           >
             <Typography
-              fontSize={16}
-              fontWeight={500}
-              lineHeight={1.5}
-              textAlign={{ xs: "center", sm: "left" }}
-            >
-              GET 100s OF ONLINE COURSES FOR FREE
-            </Typography>
-            <Typography
               fontSize={{ xs: 36, sm: 48 }}
               fontWeight={500}
               lineHeight={1.5}
               textAlign={{ xs: "center", sm: "left" }}
             >
               REGISTER NOW
+            </Typography>
+            <Typography
+              fontSize={16}
+              fontWeight={500}
+              lineHeight={1.5}
+              textAlign={{ xs: "center", sm: "left" }}
+            >
+              GET 100s OF ONLINE COURSES FOR FREE
             </Typography>
             <Box
               display="flex"
@@ -43,17 +59,28 @@ const RegistrationBanner = () => {
               mt={2}
               justifyContent="center"
             >
-              <Timers count="00" title="Days" />
+              {/* <Timers count="00" title="Days" />
               <Timers count="00" title="Hours" />
               <Timers count="00" title="Minutes" />
-              <Timers count="00" title="Seconds" />
+              <Timers count="00" title="Seconds" /> */}
             </Box>
           </Grid>
           <Grid size={{ xs: 12, md: 6.5 }}>
-            <CourseRegistrationForm />
+            <CourseRegistrationForm onSubmit={handleFormSubmit} />
           </Grid>
         </Grid>
       </Container>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </Box>
   );
 };

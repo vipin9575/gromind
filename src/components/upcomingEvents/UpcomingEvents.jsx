@@ -1,11 +1,34 @@
 import { Box, Container, Divider, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import EventsCard from "../EventsCard";
-import eventImg from "../../images/events.svg";
+// import eventImg from "../../images/events.svg";
 import clockIcon from "../../images/clockIcon.svg";
 import locationIcon from "../../images/locationIcon.svg";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import moment from "moment";
 
 const UpcomingEvents = () => {
+  const [events, setEvents] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        "https://api.gromindacademy.com/event/all"
+      );
+      if (response.status === 200) {
+        setEvents(response.data);
+        console.log(response.data);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <Box display="flex" flexDirection="column" alignItems="center" my={4}>
       <Box textAlign="center" px={{ xs: 2, md: 0 }}>
@@ -37,7 +60,25 @@ const UpcomingEvents = () => {
       </Box>
       <Container sx={{ mt: 4 }}>
         <Grid container spacing={4}>
-          <EventsCard
+          {events.map((event) => (
+            <EventsCard
+              key={event._id}
+              eventImg={event.image}
+              date={moment(event.start_datetime).format("DD")}
+              month={moment(event.start_datetime).format("MMM")}
+              time={`${moment(event.start_datetime).format("hh A")} - ${moment(
+                event.endt_datetime
+              ).format("hh A")}`}
+              location={event.location}
+              description={
+                event.event_name ||
+                "Lorem Ipsum is simply dummytext of the Lorem Ipsum"
+              }
+              clockIcon={clockIcon}
+              locationIcon={locationIcon}
+            />
+          ))}
+          {/* <EventsCard
             eventImg={eventImg}
             date="13"
             month="Nov"
@@ -56,7 +97,7 @@ const UpcomingEvents = () => {
             description="Lorem Ipsum is simply dummytext of the Lorem Ipsum"
             clockIcon={clockIcon}
             locationIcon={locationIcon}
-          />
+          /> */}
         </Grid>
       </Container>
     </Box>

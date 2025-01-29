@@ -5,11 +5,11 @@ import footerLogo from "../../images/footerLogo.png";
 const sectionLinks = [
   {
     title: "Section 1",
-    links: ["About Us", "Our Services", "Contact"],
+    links: ["About Us", "Contact"],
   },
   {
     title: "Section 2",
-    links: ["Disclaimer", "Testimonials", "Privacy Policy", "Terms of Service"],
+    links: ["Privacy Policy", "Terms of Service"],
   },
 ];
 

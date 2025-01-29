@@ -1,8 +1,6 @@
-// import "./PopularCourses.css";
-import TableauImage from "../../images/MaskGroup2.png"; // Update this with the correct path to your images
-import PowerBIImage from "../../images/MaskGroup5.png";
-import PythonSQLImage from "../../images/MaskGroup2.png";
-import profileIcon from "../../images/profileIcon.svg";
+import TableauImage from "../../images/MaskGroup2.png";
+// import PowerBIImage from "../../images/MaskGroup5.png";
+// import PythonSQLImage from "../../images/MaskGroup2.png";
 import {
   Box,
   Card,
@@ -11,37 +9,58 @@ import {
   CardMedia,
   Container,
   Divider,
+  Link,
   Stack,
   Typography,
 } from "@mui/material";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const PopularCourses = () => {
-  const courses = [
-    {
-      title: "Tableau and Advanced Excel",
-      content:
-        "Launch your career in Data Analytics. Build in-demand skills and gain credentials to go from beginner to job-ready in 8 months or less. No degree or prior experience required.",
-      students: 60,
-      price: "20",
-      image: TableauImage,
-    },
-    {
-      title: "Power BI and Advanced Excel",
-      content:
-        "Become a Power BI and Power Platform Expert. Boost Productivity, Automate Processes, and Gain Valuable Insights.",
-      students: 60,
-      price: "20",
-      image: PowerBIImage,
-    },
-    {
-      title: "Python and SQL",
-      content:
-        "Analyze data within a database using SQL and Python. Construct basic to intermediate level SQL queries using DML commands.",
-      students: 60,
-      price: "20",
-      image: PythonSQLImage,
-    },
-  ];
+  const [courses, setCourses] = useState([]);
+  // const courses = [
+  //   {
+  //     title: "Tableau and Advanced Excel",
+  //     content:
+  //       "Launch your career in Data Analytics. Build in-demand skills and gain credentials to go from beginner to job-ready in 8 months or less. No degree or prior experience required.",
+  //     students: 60,
+  //     price: "20",
+  //     image: TableauImage,
+  //   },
+  //   {
+  //     title: "Power BI and Advanced Excel",
+  //     content:
+  //       "Become a Power BI and Power Platform Expert. Boost Productivity, Automate Processes, and Gain Valuable Insights.",
+  //     students: 60,
+  //     price: "20",
+  //     image: PowerBIImage,
+  //   },
+  //   {
+  //     title: "Python and SQL",
+  //     content:
+  //       "Analyze data within a database using SQL and Python. Construct basic to intermediate level SQL queries using DML commands.",
+  //     students: 60,
+  //     price: "20",
+  //     image: PythonSQLImage,
+  //   },
+  // ];
+
+  const fetchCourses = async () => {
+    try {
+      const response = await axios.get(
+        "https://api.gromindacademy.com/course/popular"
+      );
+      const data = response?.data || [];
+      // console.log(data);
+      setCourses(data);
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCourses();
+  }, []);
 
   return (
     <Box display="flex" flexDirection="column" alignItems="center" my={4}>
@@ -73,70 +92,77 @@ const PopularCourses = () => {
         />
       </Box>
       <Container maxWidth="lg" sx={{ mt: 4 }}>
-        <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
-          {courses.map(({ title, content, image, students, price }, index) => (
-            <Card
-              key={index}
-              elevation={0}
-              sx={{
-                maxWidth: 375,
-                borderRadius: 0,
-                border: "1px solid #707070",
-                position: "relative",
-              }}
-            >
-              <CardMedia
-                component="img"
-                height="194"
-                image={image}
-                title="excel"
-              />
-              <CardContent>
-                <Typography
-                  fontSize={22}
-                  fontWeight={600}
-                  lineHeight={1.5}
-                  color="var(--secondary-color)"
-                  sx={{ mb: 1 }}
-                >
-                  {title}
-                </Typography>
-                <Typography
-                  fontSize={16}
-                  fontWeight={400}
-                  lineHeight={1.5}
-                  color="var(--secondary-color)"
-                  sx={{ mb: 6 }}
-                >
-                  {content}
-                </Typography>
-              </CardContent>
-              <CardActions
+        <Stack direction={{ xs: "column", sm: "row" }} spacing={2} justifyContent="center">
+          {courses.map(
+            ({ course_name, description, image }, index) => (
+              <Card
+                key={index}
+                elevation={0}
                 sx={{
-                  justifyContent: "space-between",
-                  px: 2,
-                  bgcolor: "var(--secondary-gray-color)",
-                  borderTop: "1px solid #707070",
-                  position: "absolute",
-                  bottom: 0,
-                  left: 0,
-                  width: "100%",
+                  maxWidth: 375,
+                  borderRadius: 0,
+                  border: "1px solid #707070",
+                  position: "relative",
                 }}
               >
-                <Box display="flex" alignItems="center" gap={1}>
-                  <img
-                    src={profileIcon}
-                    alt="profile"
-                    style={{ width: 20, height: 20 }}
-                  />
-                  <Typography color="var(--secondary-color)">
-                    {students} Students
+                <CardMedia
+                  component="img"
+                  height="194"
+                  image={image || TableauImage}
+                  title={course_name}
+                />
+                <CardContent>
+                  <Typography
+                    fontSize={22}
+                    fontWeight={600}
+                    lineHeight={1.5}
+                    color="var(--secondary-color)"
+                    sx={{ mb: 1 }}
+                  >
+                    {course_name}
                   </Typography>
-                </Box>
-                <Typography color="var(--main-red-color)">${price}</Typography>
-              </CardActions>
-            </Card>
-          ))}
+                  <Typography
+                    fontSize={16}
+                    fontWeight={400}
+                    lineHeight={1.5}
+                    color="var(--secondary-color)"
+                    sx={{ mb: 6 }}
+                  >
+                    {description ||
+                      "Launch your career in Data Analytics. Build in-demand skills and gain credentials to go from beginner to job-ready in 8 months or less. No degree or prior experience required."}
+                  </Typography>
+                </CardContent>
+                <CardActions
+                  sx={{
+                    justifyContent: "space-between",
+                    px: 2,
+                    bgcolor: "var(--secondary-gray-color)",
+                    borderTop: "1px solid #707070",
+                    position: "absolute",
+                    bottom: 0,
+                    left: 0,
+                    width: "100%",
+                  }}
+                >
+                  <Link
+                    href="/mindgrow/courses"
+                    sx={{
+                      textDecoration: "none",
+                      color: "var(--secondary-color)",
+                      fontWeight: 500,
+                      fontSize: 16,
+                      "&:hover": {
+                        color: "var(--main-blue-color)",
+                        transition: "color 0.3s ease-in-out",
+                      },
+                    }}
+                  >
+                    Explore more
+                  </Link>
+                </CardActions>
+              </Card>
+            )
+          )}
         </Stack>
       </Container>
     </Box>

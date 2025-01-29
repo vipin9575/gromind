@@ -31,7 +31,7 @@ const Header = () => {
     setDrawerOpen(!drawerOpen);
   };
 
-  const navItems = ["Home", "About Us", "Courses", "Blog", "Contact Us"];
+  const navItems = ["Home", "About Us", "Courses", "Contact Us"];
 
   return (
     <Box>
@@ -67,16 +67,42 @@ const Header = () => {
               sx={{
                 display: "flex",
                 alignItems: "center",
-                gap: "10px",
+                columnGap: { xs: 4, sm: 8 },
+                rowGap: { xs: 1, sm: 0 },
                 color: "#fff",
-                fontSize: "14px",
                 flexWrap: "wrap",
               }}
             >
-              <Phone fontSize="small" />
-              <Typography variant="body2">+91-9266 464 133</Typography>
-              <Email fontSize="small" />
-              <Typography variant="body2">HR@groMindacademy.com</Typography>
+              <Box
+                display="flex"
+                alignItems="center"
+                columnGap={{ xs: 0.2, sm: 1 }}
+              >
+                <Phone sx={{ fontSize: { xs: "small", sm: "medium" } }} />
+                <Typography
+                  variant="body2"
+                  sx={{
+                    fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                  }}
+                >
+                  +91-9266 464 133
+                </Typography>
+              </Box>
+              <Box
+                display="flex"
+                alignItems="center"
+                columnGap={{ xs: 0.2, sm: 1 }}
+              >
+                <Email sx={{ fontSize: { xs: "small", sm: "medium" } }} />
+                <Typography
+                  variant="body2"
+                  sx={{
+                    fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                  }}
+                >
+                  HR@groMindacademy.com
+                </Typography>
+              </Box>
             </Box>
 
             {/* Social Links */}
@@ -86,24 +112,29 @@ const Header = () => {
                 alignItems: "center",
                 gap: "15px",
                 color: "#fff",
-                mt: { xs: "10px", sm: "0" },
               }}
             >
               <MuiLink href="#" color="inherit" aria-label="Twitter">
-                <Twitter fontSize="small" />
+                <Twitter
+                  sx={{ fontSize: { xs: "small", sm: "medium", md: "large" } }}
+                />
               </MuiLink>
               <MuiLink href="#" color="inherit" aria-label="Instagram">
-                <Instagram fontSize="small" />
+                <Instagram
+                  sx={{ fontSize: { xs: "small", sm: "medium", md: "large" } }}
+                />
               </MuiLink>
               <MuiLink href="#" color="inherit" aria-label="Facebook">
-                <Facebook fontSize="small" />
+                <Facebook
+                  sx={{ fontSize: { xs: "small", sm: "medium", md: "large" } }}
+                />
               </MuiLink>
-              <Button color="inherit" size="small">
+              {/* <Button color="inherit" size="small">
                 Login
               </Button>
               <Button color="inherit" size="small">
                 Sign Up
-              </Button>
+              </Button> */}
             </Box>
           </Toolbar>
         </AppBar>

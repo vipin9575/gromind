@@ -6,6 +6,7 @@ import {
   Divider,
   FormControl,
   FormControlLabel,
+  FormHelperText,
   FormLabel,
   Radio,
   RadioGroup,
@@ -16,6 +17,9 @@ import {
 import RegistrationBanner from "../components/registrationBanner/RegistrationBanner";
 import PopularCourses from "../components/popularCourses/PopularCourses";
 import Grid from "@mui/material/Grid2";
+import { useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const courseOptions = {
   Online: [
@@ -35,10 +39,89 @@ const courseOptions = {
 };
 
 const ContactUsPage = () => {
+  const [formData, setFormData] = useState({
+    full_name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "Hi, I am enquiring about xyz",
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: "",
+    }));
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.full_name) {
+      newErrors.full_name = "First Name is required.";
+    } else if (!/^[a-zA-Z\s]+$/.test(formData.full_name)) {
+      newErrors.full_name = "First Name must contain only alphabets.";
+    }
+
+    if (!formData.email) {
+      newErrors.email = "Email Id is required.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Email Id is not valid.";
+    }
+
+    if (!formData.phone) {
+      newErrors.phone = "Phone Number is required.";
+    } else if (!/^\d{10}$/.test(formData.phone)) {
+      newErrors.phone = "Phone Number must be exactly 10 digits.";
+    }
+
+    if (!formData.subject) {
+      newErrors.subject = "Please select a course.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    if (validateForm()) {
+      try {
+        const response = axios.post(
+          "https://api.gromindacademy.com/contact-us",
+          formData
+        );
+        if (response) console.log("Response:", response);
+        toast.success("Form submitted successfully!");
+      } catch (error) {
+        console.error("Error submitting form:", error);
+        toast.error("An error occurred while submitting the form.");
+      }
+
+      setFormData({
+        full_name: "",
+        email: "",
+        phone: "",
+        subject: "",
+      });
+
+      setErrors({});
+    }
+  };
+
   return (
     <Box mt={28}>
       {/* <AboutUs isFullPage={true} /> */}
-      <Box>
+      <Box component="form" onSubmit={handleSubmit}>
         <Container maxWidth="lg">
           <Box textAlign="left" mb={4}>
             <Typography
@@ -61,7 +144,7 @@ const ContactUsPage = () => {
             <Grid size={{ xs: 12, sm: 7 }}>
               <Grid container spacing={2}>
                 <Grid size={12}>
-                  <FormControl fullWidth>
+                  <FormControl fullWidth error={!!errors.full_name}>
                     <FormLabel
                       sx={{
                         fontSize: 14,
@@ -76,11 +159,17 @@ const ContactUsPage = () => {
                       variant="outlined"
                       placeholder="First name"
                       fullWidth
+                      name="full_name"
+                      value={formData.full_name || ""}
+                      onChange={handleChange}
                     />
+                    {errors.full_name && (
+                      <FormHelperText>{errors.full_name}</FormHelperText>
+                    )}
                   </FormControl>
                 </Grid>
                 <Grid size={{ xs: 12, sm: 6 }}>
-                  <FormControl fullWidth>
+                  <FormControl fullWidth error={!!errors.email}>
                     <FormLabel
                       sx={{
                         fontSize: 14,
@@ -95,11 +184,17 @@ const ContactUsPage = () => {
                       fullWidth
                       variant="outlined"
                       placeholder="you@Compay.com"
+                      name="email"
+                      value={formData.email || ""}
+                      onChange={handleChange}
                     />
+                    {errors.email && (
+                      <FormHelperText>{errors.email}</FormHelperText>
+                    )}
                   </FormControl>
                 </Grid>
                 <Grid size={{ xs: 12, sm: 6 }}>
-                  <FormControl fullWidth>
+                  <FormControl fullWidth error={!!errors.phone}>
                     <FormLabel
                       sx={{
                         fontSize: 14,
@@ -115,7 +210,13 @@ const ContactUsPage = () => {
                       fullWidth
                       variant="outlined"
                       placeholder="phone"
+                      name="phone"
+                      value={formData.phone || ""}
+                      onChange={handleChange}
                     />
+                    {errors.phone && (
+                      <FormHelperText>{errors.phone}</FormHelperText>
+                    )}
                   </FormControl>
                 </Grid>
               </Grid>
@@ -142,7 +243,7 @@ const ContactUsPage = () => {
                         elevation={0}
                         key={courseType}
                       >
-                        <FormControl>
+                        <FormControl error={!!errors.subject}>
                           <FormLabel
                             sx={{
                               fontSize: 18,
@@ -151,12 +252,12 @@ const ContactUsPage = () => {
                             }}
                             id={`radio-group-label-${courseType}`}
                           >
-                            {courseType}
+                            {/* {courseType} */}
                           </FormLabel>
                           <RadioGroup
                             aria-labelledby={`radio-group-label-${courseType}`}
                             name={`radio-buttons-group-${courseType}`}
-                            defaultValue={options[0]}
+                            value={formData.subject}
                           >
                             {options.map((option, index) => (
                               <FormControlLabel
@@ -165,9 +266,22 @@ const ContactUsPage = () => {
                                 control={<Radio />}
                                 label={option}
                                 sx={{ color: "var(--main-gray-color)" }}
+                                onChange={(e) =>
+                                  handleChange({
+                                    target: {
+                                      name: "subject",
+                                      value: e.target.value,
+                                    },
+                                  })
+                                }
                               />
                             ))}
                           </RadioGroup>
+                          {errors.subject && (
+                            <FormHelperText>
+                              {errors.subject}
+                            </FormHelperText>
+                          )}
                         </FormControl>
                       </Card>
                     )
@@ -175,6 +289,7 @@ const ContactUsPage = () => {
                 </Stack>
                 <Box display="flex" mt={2}>
                   <Button
+                    type="submit"
                     variant="contained"
                     sx={{
                       bgcolor: "var(--main-blue-color)",

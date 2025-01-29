@@ -4,6 +4,7 @@ import {
   Card,
   FormControl,
   FormControlLabel,
+  FormHelperText,
   FormLabel,
   OutlinedInput,
   Radio,
@@ -12,10 +13,10 @@ import {
   Typography,
 } from "@mui/material";
 import PropTypes from "prop-types";
+import { useState } from "react";
 
 const CourseRegistrationForm = ({
   title = "Create Your Free Account Now !",
-  formFields = ["First Name", "Email Id", "Phone Number"],
   courseOptions = {
     Online: [
       "Tableau and Advanced Excel",
@@ -32,9 +33,79 @@ const CourseRegistrationForm = ({
       "Digital Marketing & Gen AI",
     ],
   },
+  onSubmit,
 }) => {
+  const [formData, setFormData] = useState({
+    full_name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "Hi, I am enquiring about xyz",
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: "",
+    }));
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.full_name) {
+      newErrors.full_name = "First Name is required.";
+    } else if (!/^[a-zA-Z\s]+$/.test(formData.full_name)) {
+      newErrors.full_name = "First Name must contain only alphabets.";
+    }
+
+    if (!formData.email) {
+      newErrors.email = "Email Id is required.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Email Id is not valid.";
+    }
+
+    if (!formData.phone) {
+      newErrors.phone = "Phone Number is required.";
+    } else if (!/^\d{10}$/.test(formData.phone)) {
+      newErrors.phone = "Phone Number must be exactly 10 digits.";
+    }
+
+    if (!formData.subject) {
+      newErrors.subject = "Please select a course.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    if (validateForm()) {
+      // console.log(formData);
+      onSubmit(formData);
+      
+      setFormData({
+        full_name: "",
+        email: "",
+        phone: "",
+        subject: "",
+      });
+
+      setErrors({});
+    }
+  };
   return (
-    <Box>
+    <Box component="form" onSubmit={handleSubmit}>
       <Box bgcolor={"var(--primary-color)"} p={2}>
         <Typography
           color={"var(--main-white-color)"}
@@ -46,12 +117,45 @@ const CourseRegistrationForm = ({
         </Typography>
       </Box>
       <Box bgcolor={"var(--main-white-color)"} px={2} py={4}>
-        <Box display="flex" flexWrap="wrap" gap={2}>
-          {formFields.map((field, index) => (
-            <Box key={index} width={{ xs: "100%", md: "48%" }}>
-              <OutlinedInput placeholder={field} fullWidth />
-            </Box>
-          ))}
+        <Box display="flex" flexWrap="wrap" columnGap={2}>
+          <Box width={{ xs: "100%", md: "48%" }}>
+            <FormControl fullWidth error={!!errors.full_name} sx={{ mt: 2 }}>
+              <OutlinedInput
+                placeholder="First Name"
+                fullWidth
+                name="full_name"
+                value={formData.full_name || ""}
+                onChange={handleChange}
+              />
+              {errors.full_name && (
+                <FormHelperText>{errors.full_name}</FormHelperText>
+              )}
+            </FormControl>
+          </Box>
+          <Box width={{ xs: "100%", md: "48%" }}>
+            <FormControl fullWidth error={!!errors.email} sx={{ mt: 2 }}>
+              <OutlinedInput
+                placeholder="Email Id"
+                fullWidth
+                name="email"
+                value={formData.email || ""}
+                onChange={handleChange}
+              />
+              {errors.email && <FormHelperText>{errors.email}</FormHelperText>}
+            </FormControl>
+          </Box>
+          <Box width={{ xs: "100%", md: "48%" }}>
+            <FormControl fullWidth error={!!errors.phone} sx={{ mt: 2 }}>
+              <OutlinedInput
+                placeholder="Phone Number"
+                fullWidth
+                name="phone"
+                value={formData.phone || ""}
+                onChange={handleChange}
+              />
+              {errors.phone && <FormHelperText>{errors.phone}</FormHelperText>}
+            </FormControl>
+          </Box>
         </Box>
         <Box mt={2}>
           <Typography
@@ -75,7 +179,7 @@ const CourseRegistrationForm = ({
                 elevation={0}
                 key={courseType}
               >
-                <FormControl>
+                <FormControl error={!!errors.subject}>
                   <FormLabel
                     sx={{
                       fontSize: 18,
@@ -84,12 +188,20 @@ const CourseRegistrationForm = ({
                     }}
                     id={`radio-group-label-${courseType}`}
                   >
-                    {courseType}
+                    {/* {courseType} */}
                   </FormLabel>
                   <RadioGroup
                     aria-labelledby={`radio-group-label-${courseType}`}
                     name={`radio-buttons-group-${courseType}`}
-                    defaultValue={options[0]}
+                    value={formData.subject}
+                    onChange={(e) =>
+                      handleChange({
+                        target: {
+                          name: "subject",
+                          value: e.target.value,
+                        },
+                      })
+                    }
                   >
                     {options.map((option, index) => (
                       <FormControlLabel
@@ -106,12 +218,16 @@ const CourseRegistrationForm = ({
                       />
                     ))}
                   </RadioGroup>
+                  {errors.subject && (
+                    <FormHelperText>{errors.subject}</FormHelperText>
+                  )}
                 </FormControl>
               </Card>
             ))}
           </Stack>
           <Box display="flex" justifyContent="center" mt={2}>
             <Button
+              type="submit"
               variant="contained"
               sx={{
                 bgcolor: "var(--main-blue-color)",

@@ -1,6 +1,8 @@
 import { Box, Button, Divider, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import PropTypes from "prop-types";
+import eventImage from "../images/events.svg";
+import { useNavigate } from "react-router-dom";
 
 const EventsCard = ({
   eventImg,
@@ -13,17 +15,19 @@ const EventsCard = ({
   locationIcon,
   buttonText = "View Details",
 }) => {
+  const navigate = useNavigate();
   return (
     <Grid
       size={{ xs: 12, md: 6 }}
       sx={{
         width: "100%",
         height: "360px",
-        backgroundImage: `url(${eventImg})`,
+        backgroundImage: `url(${eventImg || eventImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         position: "relative",
+        border: "1px solid #ddd",
       }}
     >
       <Box
@@ -111,6 +115,7 @@ const EventsCard = ({
         </Box>
         <Box>
           <Button
+            onClick={() => navigate("/courses")}
             variant="contained"
             sx={{
               bgcolor: "var(--main-blue-color)",
