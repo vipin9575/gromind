@@ -1,6 +1,6 @@
 import "./AboutUs.css";
 import aboutusImg from "../../images/aboutusImg.png"; // Update this with the correct path to your image
-import aboutUs from "../../images/aboutusImg1.png";
+import aboutUs from "../../images/aboutUsImg1.png";
 import {
   Box,
   Button,
