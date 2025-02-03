@@ -4,12 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>404 - Not Found</title>
-    <script type="text/javascript">
-      // Redirect to index.html for all routes
-      window.location.href = "index.html";
-    </script>
   </head>
   <body>
-    <p>Redirecting...</p>
+    <h1>404 - Not Found</h1>
+    <p>
+      If you see this message, we can't find the requested page. You will be
+      redirected to the homepage.
+    </p>
+    <script type="text/javascript">
+      // Redirect to the root index.html page so React Router can take over
+      window.location.replace("/mindgrow/");
+    </script>
   </body>
 </html>
