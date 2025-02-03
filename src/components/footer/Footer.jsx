@@ -1,6 +1,6 @@
 import { Box, Container, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import footerLogo from "../../images/footerLogo.png";
+import footerLogo from "../../images/footerlogo.png";
 
 const sectionLinks = [
   {
