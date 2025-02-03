@@ -309,7 +309,7 @@ const ContactUsPage = () => {
                 <Grid size={12}>
                   <Typography fontWeight={600}>Email</Typography>
                   <Typography fontWeight={400} color="#515151">
-                    hr@groMindacademy.com
+                    HR@groMindacademy.com
                   </Typography>
                 </Grid>
                 <Grid size={12}>

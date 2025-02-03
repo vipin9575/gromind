@@ -31,7 +31,7 @@
   margin-top: 20px;
 }
 
-.tabs button {
+/* .tabs button {
   width: 260px;
   height: 100px;
   margin: 10px 10px 10px 5px;
@@ -51,7 +51,7 @@
   color: #fff;
   border-color: rgba(0, 86, 145, 1);
   border-radius: 2px;
-}
+} */
 
 /* Styles for content */
 .content {
@@ -71,10 +71,97 @@
   margin-bottom: 1rem;
 }
 
-.content p {
+.content ul {
+  /* list-style: none; */
+  padding: 18px;
+  margin: 0;
+}
+
+.content li {
   font-size: 18px;
   line-height: 27px;
   font-weight: 400;
   margin-bottom: 1rem;
+  color: rgba(0, 0, 0, 1);
 }
 
+/* Styles for tabs */
+
+.tabs button {
+  width: 260px;
+  height: 100px;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 5px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.tabs button:nth-child(1) {
+  /* Tableau and Advanced Excel */
+  background-color: #e6f7ff;
+  border-color: #007bff;
+}
+
+.tabs button:nth-child(2) {
+  /* Power BI and Advanced Excel */
+  background-color: #e8f5e9;
+  border-color: #43a047;
+}
+
+.tabs button:nth-child(3) {
+  /* Salesforce Developer */
+  background-color: #fff3e0;
+  border-color: #ff9800;
+}
+
+.tabs button:nth-child(4) {
+  /* Python and SQL */
+  background-color: #f3e5f5;
+  border-color: #9c27b0;
+}
+
+.tabs button:nth-child(5) {
+  /* Java Developer */
+  background-color: #ffebee;
+  border-color: #e53935;
+}
+
+.tabs button:nth-child(6) {
+  /* Database Administrator */
+  background-color: #ede7f6;
+  border-color: #673ab7;
+}
+
+.tabs button:nth-child(7) {
+  /* HR Business Partnering */
+  background-color: #e0f2f1;
+  border-color: #009688;
+}
+
+.tabs button:nth-child(8) {
+  /* HR Development Program */
+  background-color: #ffecb3;
+  border-color: #ffca28;
+}
+
+.tabs button:nth-child(9) {
+  /* Technical Recruiting */
+  background-color: #fbe9e7;
+  border-color: #d84315;
+}
+
+.tabs button:nth-child(10) {
+  /* Digital Marketing & Gen AI */
+  background-color: #f9fbe7;
+  border-color: #cddc39;
+}
+
+.tabs button.active {
+  background-color: #333;
+  color: white;
+  border-color: #222;
+}

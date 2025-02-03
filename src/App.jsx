@@ -8,18 +8,26 @@ import { ThemeProvider } from "@emotion/react";
 import theme from "./theme";
 import "./App.css";
 import ContactUsPage from "./pages/ContactUsPage";
+import EventsPage from "./pages/EventsPage";
+import ScrollToTop from "./ScrollToTop";
 
 const App = () => {
   return (
     <>
       <ThemeProvider theme={theme}>
+        <ScrollToTop />
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
           <Route path="/about-us" element={<AboutUsPage />} />
-          <Route path="/courses" element={<CouresPage />} />
+          <Route path="/courses" element={<CouresPage />}>
+            <Route path="/courses/:id" element={<CouresPage />} />
+          </Route>
+
           <Route path="/contact-us" element={<ContactUsPage />} />
+          <Route path="/events" element={<EventsPage />}>
+            <Route path="/events/:event_name" element={<EventsPage />} />
+          </Route>
         </Routes>
         <Footer />
       </ThemeProvider>

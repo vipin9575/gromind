@@ -18,7 +18,7 @@ const UpcomingEvents = () => {
       );
       if (response.status === 200) {
         setEvents(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -44,8 +44,7 @@ const UpcomingEvents = () => {
           fontWeight={400}
           color="var(--secondary-color)"
         >
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. L
+          Don't miss out on exciting upcoming events and special gatherings!
         </Typography>
 
         <Divider
@@ -59,45 +58,23 @@ const UpcomingEvents = () => {
         />
       </Box>
       <Container sx={{ mt: 4 }}>
-        <Grid container spacing={4}>
-          {events.map((event) => (
+        <Grid container spacing={4} justifyContent="center">
+          {events.map((event, idx) => (
             <EventsCard
-              key={event._id}
-              eventImg={event.image}
+              key={idx}
+              eventImg={`https://img.gromindacademy.com` + event.image}
               date={moment(event.start_datetime).format("DD")}
               month={moment(event.start_datetime).format("MMM")}
               time={`${moment(event.start_datetime).format("hh A")} - ${moment(
                 event.endt_datetime
               ).format("hh A")}`}
               location={event.location}
-              description={
-                event.event_name ||
-                "Lorem Ipsum is simply dummytext of the Lorem Ipsum"
-              }
+              description={event.short_desc}
               clockIcon={clockIcon}
               locationIcon={locationIcon}
+              url={event.url_part}
             />
           ))}
-          {/* <EventsCard
-            eventImg={eventImg}
-            date="13"
-            month="Nov"
-            time="12:00 AM - 12:30 AM"
-            location="Hilton Quebec"
-            description="Lorem Ipsum is simply dummytext of the Lorem Ipsum"
-            clockIcon={clockIcon}
-            locationIcon={locationIcon}
-          />
-          <EventsCard
-            eventImg={eventImg}
-            date="13"
-            month="Nov"
-            time="12:00 AM - 12:30 AM"
-            location="Hilton Quebec"
-            description="Lorem Ipsum is simply dummytext of the Lorem Ipsum"
-            clockIcon={clockIcon}
-            locationIcon={locationIcon}
-          /> */}
         </Grid>
       </Container>
     </Box>

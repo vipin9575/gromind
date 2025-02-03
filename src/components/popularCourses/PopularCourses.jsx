@@ -9,11 +9,11 @@ import {
   CardMedia,
   Container,
   Divider,
-  Link,
   Stack,
   Typography,
 } from "@mui/material";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const PopularCourses = () => {
@@ -92,77 +92,77 @@ const PopularCourses = () => {
         />
       </Box>
       <Container maxWidth="lg" sx={{ mt: 4 }}>
-        <Stack direction={{ xs: "column", sm: "row" }} spacing={2} justifyContent="center">
-          {courses.map(
-            ({ course_name, description, image }, index) => (
-              <Card
-                key={index}
-                elevation={0}
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          spacing={2}
+          justifyContent="center"
+        >
+          {courses.map(({ course_name, description, image ,url_part}, index) => {
+            let domain = "https://img.gromindacademy.com"
+            return(
+            <Card
+              key={index}
+              elevation={0}
+              sx={{
+                maxWidth: 375,
+                borderRadius: 0,
+                border: "1px solid #707070",
+                position: "relative",
+              }}
+            >
+              <CardMedia
+                component="img"
+                height="194"
+                image={domain + image}
+                title={course_name}
+              />
+              <CardContent>
+                <Typography
+                  fontSize={22}
+                  fontWeight={600}
+                  lineHeight={1.5}
+                  color="var(--secondary-color)"
+                  sx={{ mb: 1 }}
+                >
+                  {course_name}
+                </Typography>
+                <Typography
+                  fontSize={16}
+                  fontWeight={400}
+                  lineHeight={1.5}
+                  color="var(--secondary-color)"
+                  sx={{ mb: 6 }}
+                >
+                  {description ||
+                    "Launch your career in Data Analytics. Build in-demand skills and gain credentials to go from beginner to job-ready in 8 months or less. No degree or prior experience required."}
+                </Typography>
+              </CardContent>
+              <CardActions
                 sx={{
-                  maxWidth: 375,
-                  borderRadius: 0,
-                  border: "1px solid #707070",
-                  position: "relative",
+                  justifyContent: "space-between",
+                  px: 2,
+                  bgcolor: "var(--secondary-gray-color)",
+                  borderTop: "1px solid #707070",
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  width: "100%",
                 }}
               >
-                <CardMedia
-                  component="img"
-                  height="194"
-                  image={image || TableauImage}
-                  title={course_name}
-                />
-                <CardContent>
-                  <Typography
-                    fontSize={22}
-                    fontWeight={600}
-                    lineHeight={1.5}
-                    color="var(--secondary-color)"
-                    sx={{ mb: 1 }}
-                  >
-                    {course_name}
-                  </Typography>
-                  <Typography
-                    fontSize={16}
-                    fontWeight={400}
-                    lineHeight={1.5}
-                    color="var(--secondary-color)"
-                    sx={{ mb: 6 }}
-                  >
-                    {description ||
-                      "Launch your career in Data Analytics. Build in-demand skills and gain credentials to go from beginner to job-ready in 8 months or less. No degree or prior experience required."}
-                  </Typography>
-                </CardContent>
-                <CardActions
-                  sx={{
-                    justifyContent: "space-between",
-                    px: 2,
-                    bgcolor: "var(--secondary-gray-color)",
-                    borderTop: "1px solid #707070",
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    width: "100%",
+                <Link
+                  to={`/courses/${url_part}`}
+                  style={{
+                    textDecoration: "none",
+                    color: "var(--secondary-color)",
+                    fontWeight: 500,
+                    fontSize: 16,
                   }}
                 >
-                  <Link
-                    href="/mindgrow/courses"
-                    sx={{
-                      textDecoration: "none",
-                      color: "var(--secondary-color)",
-                      fontWeight: 500,
-                      fontSize: 16,
-                      "&:hover": {
-                        color: "var(--main-blue-color)",
-                        transition: "color 0.3s ease-in-out",
-                      },
-                    }}
-                  >
-                    Explore more
-                  </Link>
-                </CardActions>
-              </Card>
-            )
-          )}
+                  Explore more
+                </Link>
+              </CardActions>
+            </Card>
+          )})}
         </Stack>
       </Container>
     </Box>

@@ -12,8 +12,10 @@ import {
 import Grid from "@mui/material/Grid2";
 import PropTypes from "prop-types";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AboutUs = ({ isFullPage }) => {
+  const navigate = useNavigate();
   const [activeContent, setActiveContent] = useState("company");
 
   return (
@@ -114,6 +116,7 @@ const AboutUs = ({ isFullPage }) => {
                   px: 4,
                   boxShadow: "none",
                 }}
+                onClick={() => navigate("/about-us")}
               >
                 Read More
               </Button>

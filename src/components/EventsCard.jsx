@@ -1,7 +1,6 @@
 import { Box, Button, Divider, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import PropTypes from "prop-types";
-import eventImage from "../images/events.svg";
 import { useNavigate } from "react-router-dom";
 
 const EventsCard = ({
@@ -14,6 +13,7 @@ const EventsCard = ({
   clockIcon,
   locationIcon,
   buttonText = "View Details",
+  url,
 }) => {
   const navigate = useNavigate();
   return (
@@ -22,7 +22,7 @@ const EventsCard = ({
       sx={{
         width: "100%",
         height: "360px",
-        backgroundImage: `url(${eventImg || eventImage})`,
+        backgroundImage: `url(${eventImg})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -115,7 +115,7 @@ const EventsCard = ({
         </Box>
         <Box>
           <Button
-            onClick={() => navigate("/courses")}
+            onClick={() => navigate(`/events/${url}`)}
             variant="contained"
             sx={{
               bgcolor: "var(--main-blue-color)",
@@ -148,6 +148,7 @@ EventsCard.propTypes = {
   clockIcon: PropTypes.string,
   locationIcon: PropTypes.string,
   buttonText: PropTypes.string,
+  url: PropTypes.string,
 };
 
 export default EventsCard;

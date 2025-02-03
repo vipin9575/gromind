@@ -3,7 +3,6 @@ import {
   Toolbar,
   Typography,
   IconButton,
-  Button,
   Box,
   Link as MuiLink,
   Drawer,
@@ -19,19 +18,21 @@ import {
   Facebook,
   Twitter,
   Instagram,
+  Close,
 } from "@mui/icons-material";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import logo from "../../images/logo.png";
 import { useState } from "react";
 
 const Header = () => {
+  const location = useLocation();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
   };
 
-  const navItems = ["Home", "About Us", "Courses", "Contact Us"];
+  const navItems = ["Home", "About Us", "Courses", "Events", "Contact Us"];
 
   return (
     <Box>
@@ -55,11 +56,15 @@ const Header = () => {
           <Toolbar
             sx={{
               display: "flex",
-              justifyContent: "space-between",
+              justifyContent: { xs: "flex-start", sm: "space-between" },
               alignItems: "center",
               height: "100%",
               padding: "0 20px",
               flexWrap: { xs: "wrap", sm: "nowrap" },
+
+              "@media (max-width: 600px)": {
+                padding: "0 10px", // Adjust for small screens
+              },
             }}
           >
             {/* Contact Info */}
@@ -108,7 +113,7 @@ const Header = () => {
             {/* Social Links */}
             <Box
               sx={{
-                display: "flex",
+                display: { xs: "none", sm: "flex" },
                 alignItems: "center",
                 gap: "15px",
                 color: "#fff",
@@ -175,25 +180,39 @@ const Header = () => {
                 gap: "20px",
               }}
             >
-              {navItems.map((item, index) => (
-                <NavLink
-                  key={index}
-                  to={`/${item.replace(/\s+/g, "-").toLowerCase()}`}
-                  style={({ isActive }) => ({
-                    textDecoration: "none",
-                    borderRadius: "30px",
-                    border: isActive ? "none" : "1px solid #373737",
-                    color: isActive ? "#fff" : "#373737",
-                    backgroundColor: isActive
-                      ? "var(--main-blue-color)"
-                      : "transparent",
-                    textTransform: "capitalize",
-                    padding: "10px 20px",
-                  })}
-                >
-                  <Typography fontWeight={600}>{item}</Typography>
-                </NavLink>
-              ))}
+              {navItems.map((item, index) => {
+                const path = `/${item.replace(/\s+/g, "-").toLowerCase()}`;
+                const isActive =
+                  location.pathname === path ||
+                  (item === "Home" && location.pathname === "/") ||
+                  (item === "Courses" &&
+                    location.pathname.includes("/courses")) ||
+                  (item === "Events" && location.pathname.includes("/events"));
+
+                return (
+                  <NavLink
+                    key={index}
+                    to={
+                      item === "Home"
+                        ? "/"
+                        : `/${item.replace(/\s+/g, "-").toLowerCase()}`
+                    }
+                    style={{
+                      textDecoration: "none",
+                      borderRadius: "30px",
+                      border: isActive ? "none" : "1px solid #373737",
+                      color: isActive ? "#fff" : "#373737",
+                      backgroundColor: isActive
+                        ? "var(--main-blue-color)"
+                        : "transparent",
+                      textTransform: "capitalize",
+                      padding: "10px 20px",
+                    }}
+                  >
+                    <Typography fontWeight={600}>{item}</Typography>
+                  </NavLink>
+                );
+              })}
             </Box>
 
             {/* Hamburger Menu for Mobile */}
@@ -219,7 +238,7 @@ const Header = () => {
             },
           }}
         >
-          <List>
+          <List sx={{ marginTop: "36px" }}>
             {navItems.map((item, index) => (
               <ListItem key={index} disablePadding>
                 <NavLink
@@ -238,6 +257,21 @@ const Header = () => {
               </ListItem>
             ))}
           </List>
+          <Box
+            sx={{
+              position: "absolute",
+              top: "10px",
+              right: "10px",
+              cursor: "pointer",
+              color: "#632B90",
+              "&:hover": {
+                color: "red",
+              },
+            }}
+            onClick={handleDrawerToggle}
+          >
+            <Close />
+          </Box>
         </Drawer>
 
         {/* Spacer for fixed header */}
