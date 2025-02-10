@@ -8,6 +8,7 @@ import {
   FormControlLabel,
   FormHelperText,
   FormLabel,
+  Link,
   Radio,
   RadioGroup,
   Stack,
@@ -20,6 +21,7 @@ import Grid from "@mui/material/Grid2";
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+
 
 const courseOptions = {
   Online: [
@@ -278,9 +280,7 @@ const ContactUsPage = () => {
                             ))}
                           </RadioGroup>
                           {errors.subject && (
-                            <FormHelperText>
-                              {errors.subject}
-                            </FormHelperText>
+                            <FormHelperText>{errors.subject}</FormHelperText>
                           )}
                         </FormControl>
                       </Card>
@@ -309,13 +309,25 @@ const ContactUsPage = () => {
                 <Grid size={12}>
                   <Typography fontWeight={600}>Email</Typography>
                   <Typography fontWeight={400} color="#515151">
-                    HR@groMindacademy.com
+                    <Link
+                      href="mailto:hr@gromindacademy.com"
+                      color="inherit"
+                      underline="hover"
+                    >
+                      hr@gromindacademy.com 
+                    </Link>
                   </Typography>
                 </Grid>
                 <Grid size={12}>
                   <Typography fontWeight={600}>Call /WhatsApp</Typography>
                   <Typography fontWeight={400} color="#515151">
-                    +91 9266464133
+                    <Link
+                      href="tel:+919266464133"
+                      color="inherit"
+                      underline="hover"
+                    >
+                      +91-9266 464 133
+                    </Link>
                   </Typography>
                 </Grid>
                 <Grid size={12}>

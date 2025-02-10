@@ -14,7 +14,9 @@ const EventsCard = ({
   locationIcon,
   buttonText = "View Details",
   url,
+  eventId,
 }) => {
+  console.log(eventId)
   const navigate = useNavigate();
   return (
     <Grid
@@ -115,7 +117,7 @@ const EventsCard = ({
         </Box>
         <Box>
           <Button
-            onClick={() => navigate(`/events/${url}`)}
+            onClick={() => navigate(`/events/${url}/${eventId}`)}
             variant="contained"
             sx={{
               bgcolor: "var(--main-blue-color)",
@@ -149,6 +151,7 @@ EventsCard.propTypes = {
   locationIcon: PropTypes.string,
   buttonText: PropTypes.string,
   url: PropTypes.string,
+  eventId: PropTypes.string,
 };
 
 export default EventsCard;

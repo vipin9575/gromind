@@ -1,0 +1,13 @@
+.testimonialContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+@media (max-width: 576px) {
+  .testimonialContainer .carousel .slider-wrapper {
+    width: 90% !important;
+  }
+}

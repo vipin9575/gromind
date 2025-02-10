@@ -10,13 +10,14 @@ import {
   Radio,
   RadioGroup,
   Stack,
-  Typography,
+  Typography,useMediaQuery
 } from "@mui/material";
 import PropTypes from "prop-types";
 import { useState } from "react";
 
+
 const CourseRegistrationForm = ({
-  title = "Create Your Free Account Now !",
+  title = "Register Now !",
   courseOptions = {
     Online: [
       "Tableau and Advanced Excel",
@@ -35,6 +36,7 @@ const CourseRegistrationForm = ({
   },
   onSubmit,
 }) => {
+  const isMobile = useMediaQuery('(max-width:600px)')
   const [formData, setFormData] = useState({
     full_name: "",
     email: "",
@@ -93,7 +95,7 @@ const CourseRegistrationForm = ({
     if (validateForm()) {
       // console.log(formData);
       onSubmit(formData);
-      
+
       setFormData({
         full_name: "",
         email: "",
@@ -167,14 +169,19 @@ const CourseRegistrationForm = ({
           >
             Which Course are you interested in?
           </Typography>
-          <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            spacing={{ xs: 0, sm: 0 }}
+          >
             {Object.entries(courseOptions).map(([courseType, options]) => (
               <Card
                 sx={{
                   flexGrow: 1,
                   p: 2,
+                  pb: !isMobile ? 2 : courseType === "Online" ? 0 : 2,
+                  pt:!isMobile ? 2 : courseType === "Online" ? 2 : 0,
                   bgcolor: "#632B900A",
-                  border: "1px solid #BBBBBB",
+                  border: "none",
                 }}
                 elevation={0}
                 key={courseType}

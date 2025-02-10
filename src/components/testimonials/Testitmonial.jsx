@@ -1,33 +1,29 @@
 import { Box, Divider, Typography } from "@mui/material";
 import feedBackImg from "../../images/testimonial.png";
 import TestimonialCarousel from "../TestimonialCarousel";
+import "./Testimonial.css";
 
 const testimonials = [
   {
-    image: "https://via.placeholder.com/140",
-    name: "Tarik Aziz",
-    role: "Web Developer",
+    image: "https://cdn.pixabay.com/photo/2014/04/02/10/25/man-303792_1280.png",
+    name: "Nishant Srivastava",
+    role: "Project Manager, Alshaya Group",
     content: [
-      "Lorem Ipsum is simply dummy text of the Lorem Ipsum.",
-      "Lorem Ipsum is simply dummy text of the Lorem Ipsum.",
-      "Lorem Ipsum is simply dummy text of the Lorem Ipsum.",
+      `" I highly recommend the Power BI course to anyone looking to level up their skills."`,
+      `" The content was highly relevant and practical, allowing me to immediately apply the techniques to my projects."`,
+      `" The trainer’s deep knowledge and step-by-step teaching style made complex concepts easy to grasp."`,
+      `" The hands-on exercises transformed the way I approach project reporting and data visualization, making my work more efficient and impactful."`,
     ],
   },
   {
-    name: "Testimonial 2",
-    content: ["Short content for the second testimonial."],
-  },
-  {
-    name: "Testimonial 3",
-    content: ["Another testimonial with minimal content."],
-  },
-  {
-    name: "Testimonial 4",
-    content: ["Another testimonial with minimal content."],
-  },
-  {
-    name: "Testimonial 5",
-    content: ["Another testimonial with minimal content."],
+    image: "https://cdn.pixabay.com/photo/2014/04/02/10/25/man-303792_1280.png",
+    name: "Naveen Kumar",
+    role: "Lead Consultant, HCL Technologies",
+    content: [
+      `" The course on Python provided a perfect balance of theory and practical application, making it easy to understand even the most complex topics."`,
+      `" I feel much more confident in using Python and SQL to solve problems after completing the program."`,
+      `" The hands-on exercises transformed the way I approach project reporting and data visualization, making my work more efficient and impactful."`,
+    ],
   },
 ];
 
@@ -47,8 +43,8 @@ const Testitmonial = () => {
           fontWeight={400}
           color="var(--secondary-color)"
         >
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. L
+          {/* Lorem Ipsum is simply dummy text of the printing and typesetting
+          industry. L */}
         </Typography>
 
         <Divider
@@ -71,12 +67,8 @@ const Testitmonial = () => {
           backgroundPositionX: "10%",
           backgroundRepeat: "no-repeat",
           position: "relative",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          overflow: "hidden",
         }}
+        className="testimonialContainer"
       >
         <TestimonialCarousel testimonials={testimonials} />
       </Box>

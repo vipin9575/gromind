@@ -33,7 +33,7 @@ const RegistrationBanner = () => {
             gap={1}
             color={"var(--main-white-color)"}
             sx={{
-              pl: { xs: 0, md: 4 },
+              pl: { xs: 0, md: 2 },
             }}
           >
             <Typography
@@ -48,9 +48,9 @@ const RegistrationBanner = () => {
               fontSize={16}
               fontWeight={500}
               lineHeight={1.5}
-              textAlign={{ xs: "center", sm: "left" }}
+              textAlign={{ xs: "center", sm: "center" }}
             >
-              GET 100s OF ONLINE COURSES FOR FREE
+              Take the First Step: Free Career Counseling is a Call Away
             </Typography>
             <Box
               display="flex"
@@ -70,7 +70,7 @@ const RegistrationBanner = () => {
           </Grid>
         </Grid>
       </Container>
-      <ToastContainer
+      {/* <ToastContainer
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}
@@ -80,7 +80,7 @@ const RegistrationBanner = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-      />
+      /> */}
     </Box>
   );
 };

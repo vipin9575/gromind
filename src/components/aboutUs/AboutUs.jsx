@@ -6,13 +6,17 @@ import {
   Button,
   Container,
   Divider,
+  Link,
   Stack,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import { motion } from "framer-motion";
 
 const AboutUs = ({ isFullPage }) => {
   const navigate = useNavigate();
@@ -23,32 +27,55 @@ const AboutUs = ({ isFullPage }) => {
       <Container maxWidth="lg">
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, md: 7 }}>
-            <Box textAlign="left" px={{ xs: 2, md: 0 }}>
-              <Typography
-                fontSize={{ xs: 24, sm: 32, md: 40 }}
-                fontWeight={600}
-                color="var(--primary-color)"
-              >
-                About Us
-              </Typography>
-              <Typography
-                fontSize={{ xs: 14, sm: 16, md: 20 }}
-                fontWeight={400}
-                color="var(--secondary-color)"
-              >
-                Empower Your Transition: Bridging Skills for Corporate Success
-              </Typography>
-
-              <Divider
-                sx={{
-                  width: { md: 145, sm: 100, xs: 50 },
-                  height: 4,
-                  bgcolor: "var(--secondary-color)",
-                  mx: 0,
-                  mt: 4,
-                }}
-              />
-            </Box>
+            <Stack
+              textAlign="left"
+              direction="row"
+              justifyContent="space-between"
+            >
+              <Box>
+                <Typography
+                  fontSize={{ xs: 24, sm: 32, md: 40 }}
+                  fontWeight={600}
+                  color="var(--primary-color)"
+                >
+                  About Us
+                </Typography>
+                <Typography
+                  fontSize={{ xs: 14, sm: 16, md: 20 }}
+                  fontWeight={400}
+                  color="var(--secondary-color)"
+                >
+                  Empower Your Transition: Bridging Skills for Corporate Success
+                </Typography>
+                <Divider
+                  sx={{
+                    width: { md: 145, sm: 100, xs: 50 },
+                    height: 4,
+                    bgcolor: "var(--secondary-color)",
+                    mx: 0,
+                    mt: 4,
+                  }}
+                />
+              </Box>
+              <Tooltip title="Chat on WhatsApp" placement="left-start" arrow>
+                <motion.div
+                  initial={{ scale: 1 }}
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 1, repeat: Infinity }}
+                >
+                  <Link
+                    href="https://wa.me/919266464133/?text=Hello%20groMind%20Academy"
+                    aria-label="Chat on WhatsApp"
+                    alignSelf={{ xs: "end", md: "center" }}
+                    sx={{ display: { xs: "block", sm: "none" }, mt: 2 }}
+                  >
+                    <WhatsAppIcon
+                      sx={{ fontSize: 30, fill: "var(--main-green-color)" }}
+                    />
+                  </Link>
+                </motion.div>
+              </Tooltip>
+            </Stack>
             <Typography
               fontSize={{ xs: 14, sm: 16 }}
               fontWeight={400}

@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Avatar, Box, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -14,6 +14,7 @@ const TestimonialCarousel = ({ testimonials }) => {
       emulateTouch
       interval={5000}
       transitionTime={500}
+      style={{ width: "80%" }}
     >
       {testimonials.map((testimonial, index) => (
         <Box
@@ -35,11 +36,11 @@ const TestimonialCarousel = ({ testimonials }) => {
               borderColor="white"
               borderRadius={50}
             >
-              {/* <Avatar
+              <Avatar
                 src={testimonial.image}
                 alt={testimonial.name}
                 sx={{ width: "100%", height: "100%" }}
-              /> */}
+              />
             </Box>
           )}
           {testimonial.name && (
@@ -68,8 +69,8 @@ const TestimonialCarousel = ({ testimonials }) => {
               <Typography
                 key={index}
                 color="common.white"
-                fontSize={{ md: 20, sm: 16, xs: 14 }}
-                fontWeight={500}
+                fontSize={{ md: 16, sm: 14, xs: 10 }}
+                fontWeight={300}
                 lineHeight={1.5}
                 mt={index === 0 ? 4 : 0}
               >

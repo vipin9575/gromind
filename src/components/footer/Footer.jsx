@@ -1,6 +1,7 @@
 import { Box, Container, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import footerLogo from "../../images/footerlogo.png";
+import { useNavigate } from "react-router-dom";
 
 const sectionLinks = [
   {
@@ -14,6 +15,14 @@ const sectionLinks = [
 ];
 
 const Footer = () => {
+  const navigate = useNavigate();
+
+  const handleLinkClick = (link) => {
+    if (link === "About Us") navigate("/about-us");
+    else if (link === "Contact") navigate("/contact-us");
+    else if (link === "Privacy Policy") navigate("/privacy-policy");
+    else if (link === "Terms of Service") navigate("/terms-of-service");
+  };
   return (
     <Box bgcolor="var(--primary-color)" pt={4} mt="auto">
       <Container>
@@ -59,6 +68,8 @@ const Footer = () => {
                   lineHeight={1.5}
                   letterSpacing={1}
                   color="customGray.main"
+                  onClick={() => handleLinkClick(link)}
+                  sx={{ cursor: "pointer" }}
                 >
                   {link}
                 </Typography>

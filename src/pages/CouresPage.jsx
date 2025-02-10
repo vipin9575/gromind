@@ -4,7 +4,7 @@ import { Box, Divider, Container, Typography } from "@mui/material";
 import axios from "axios";
 import parse from "html-react-parser";
 import { useLocation, useNavigate } from "react-router-dom";
-import Loader from "./Loader";
+import Loader from "../components/Loader";
 
 const CouresPage = () => {
   const [loading, setLoading] = useState(true);
@@ -15,7 +15,6 @@ const CouresPage = () => {
   const [activeTab, setActiveTab] = useState(
     pathName || "tableau-and-advanced-excel"
   );
-  // console.log(pathName, activeTab, pathName === activeTab);
 
   const fetchAllCourses = async () => {
     try {
@@ -23,7 +22,6 @@ const CouresPage = () => {
 
       if (res.status === 200) {
         setCourses(res.data);
-        console.log(res.data);
       }
     } catch (error) {
       console.log(error);

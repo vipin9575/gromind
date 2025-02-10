@@ -15,12 +15,17 @@
   --main-gray-color: #636363;
   --secondary-gray-color: #f6f8f9;
   --main-red-color: #9e2424;
+  --main-green-color: #00d757;
 }
 
 body {
   overflow: scroll;
   overflow-x: hidden;
   font-family: "Poppins", sans-serif;
+}
+
+b{
+  font-weight: 600;
 }
 
 .carousel .control-dots .dot {

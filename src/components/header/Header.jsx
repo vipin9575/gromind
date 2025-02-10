@@ -32,7 +32,14 @@ const Header = () => {
     setDrawerOpen(!drawerOpen);
   };
 
-  const navItems = ["Home", "About Us", "Courses", "Events", "Contact Us"];
+  const navItems = [
+    "Home",
+    "About Us",
+    "Courses",
+    "Blogs",
+    "Events",
+    "Contact Us",
+  ];
 
   return (
     <Box>
@@ -40,7 +47,7 @@ const Header = () => {
         sx={{
           margin: "0 100px",
           "@media (max-width: 600px)": {
-            margin: "0 20px", // Adjust for small screens
+            margin: "0 20px",
           },
         }}
       >
@@ -90,7 +97,13 @@ const Header = () => {
                     fontSize: { xs: "12px", sm: "14px", md: "16px" },
                   }}
                 >
-                  +91-9266 464 133
+                  <MuiLink
+                    href="tel:+919266464133"
+                    color="inherit"
+                    underline="hover"
+                  >
+                    +91-9266 464 133
+                  </MuiLink>
                 </Typography>
               </Box>
               <Box
@@ -105,7 +118,13 @@ const Header = () => {
                     fontSize: { xs: "12px", sm: "14px", md: "16px" },
                   }}
                 >
-                  HR@groMindacademy.com
+                  <MuiLink
+                    href="mailto:hr@gromindacademy.com"
+                    color="inherit"
+                    underline="hover"
+                  >
+                    hr@gromindacademy.com
+                  </MuiLink>
                 </Typography>
               </Box>
             </Box>
@@ -119,17 +138,32 @@ const Header = () => {
                 color: "#fff",
               }}
             >
-              <MuiLink href="#" color="inherit" aria-label="Twitter">
+              <MuiLink
+                target="_blank"
+                href="https://www.twitter.com"
+                color="inherit"
+                aria-label="Twitter"
+              >
                 <Twitter
                   sx={{ fontSize: { xs: "small", sm: "medium", md: "large" } }}
                 />
               </MuiLink>
-              <MuiLink href="#" color="inherit" aria-label="Instagram">
+              <MuiLink
+                target="_blank"
+                href="https://www.instagram.com"
+                color="inherit"
+                aria-label="Instagram"
+              >
                 <Instagram
                   sx={{ fontSize: { xs: "small", sm: "medium", md: "large" } }}
                 />
               </MuiLink>
-              <MuiLink href="#" color="inherit" aria-label="Facebook">
+              <MuiLink
+                target="_blank"
+                href="https://www.facebook.com"
+                color="inherit"
+                aria-label="Facebook"
+              >
                 <Facebook
                   sx={{ fontSize: { xs: "small", sm: "medium", md: "large" } }}
                 />
@@ -242,7 +276,11 @@ const Header = () => {
             {navItems.map((item, index) => (
               <ListItem key={index} disablePadding>
                 <NavLink
-                  to={`/${item.replace(/\s+/g, "-").toLowerCase()}`}
+                  to={
+                    item === "Home"
+                      ? "/"
+                      : `/${item.replace(/\s+/g, "-").toLowerCase()}`
+                  }
                   style={({ isActive }) => ({
                     textDecoration: "none",
                     color: isActive ? "#632B90" : "inherit",

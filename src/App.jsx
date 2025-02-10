@@ -10,10 +10,15 @@ import "./App.css";
 import ContactUsPage from "./pages/ContactUsPage";
 import EventsPage from "./pages/EventsPage";
 import ScrollToTop from "./ScrollToTop";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import TermsOfServicePage from "./pages/TermsOfServicePage";
+import { ToastContainer } from "react-toastify";
+import BlogsPage from "./pages/BlogsPage";
 
 const App = () => {
   return (
     <>
+      <ToastContainer />
       <ThemeProvider theme={theme}>
         <ScrollToTop />
         <Header />
@@ -26,8 +31,12 @@ const App = () => {
 
           <Route path="/contact-us" element={<ContactUsPage />} />
           <Route path="/events" element={<EventsPage />}>
-            <Route path="/events/:event_name" element={<EventsPage />} />
+            <Route path="/events/:event_name/:id" element={<EventsPage />} />
           </Route>
+
+          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+          <Route path="/terms-of-service" element={<TermsOfServicePage />} />
+          <Route path="/blogs" element={<BlogsPage />} />
         </Routes>
         <Footer />
       </ThemeProvider>

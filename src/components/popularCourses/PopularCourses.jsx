@@ -1,6 +1,3 @@
-import TableauImage from "../../images/MaskGroup2.png";
-// import PowerBIImage from "../../images/MaskGroup5.png";
-// import PythonSQLImage from "../../images/MaskGroup2.png";
 import {
   Box,
   Card,
@@ -18,32 +15,6 @@ import { useEffect, useState } from "react";
 
 const PopularCourses = () => {
   const [courses, setCourses] = useState([]);
-  // const courses = [
-  //   {
-  //     title: "Tableau and Advanced Excel",
-  //     content:
-  //       "Launch your career in Data Analytics. Build in-demand skills and gain credentials to go from beginner to job-ready in 8 months or less. No degree or prior experience required.",
-  //     students: 60,
-  //     price: "20",
-  //     image: TableauImage,
-  //   },
-  //   {
-  //     title: "Power BI and Advanced Excel",
-  //     content:
-  //       "Become a Power BI and Power Platform Expert. Boost Productivity, Automate Processes, and Gain Valuable Insights.",
-  //     students: 60,
-  //     price: "20",
-  //     image: PowerBIImage,
-  //   },
-  //   {
-  //     title: "Python and SQL",
-  //     content:
-  //       "Analyze data within a database using SQL and Python. Construct basic to intermediate level SQL queries using DML commands.",
-  //     students: 60,
-  //     price: "20",
-  //     image: PythonSQLImage,
-  //   },
-  // ];
 
   const fetchCourses = async () => {
     try {
@@ -77,8 +48,8 @@ const PopularCourses = () => {
           fontWeight={400}
           color="var(--secondary-color)"
         >
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. L
+          Empower Your Career - Industry Oriented Curriculum - Develop the Key
+          Skills for Corporate Success
         </Typography>
 
         <Divider
@@ -97,72 +68,75 @@ const PopularCourses = () => {
           spacing={2}
           justifyContent="center"
         >
-          {courses.map(({ course_name, description, image ,url_part}, index) => {
-            let domain = "https://img.gromindacademy.com"
-            return(
-            <Card
-              key={index}
-              elevation={0}
-              sx={{
-                maxWidth: 375,
-                borderRadius: 0,
-                border: "1px solid #707070",
-                position: "relative",
-              }}
-            >
-              <CardMedia
-                component="img"
-                height="194"
-                image={domain + image}
-                title={course_name}
-              />
-              <CardContent>
-                <Typography
-                  fontSize={22}
-                  fontWeight={600}
-                  lineHeight={1.5}
-                  color="var(--secondary-color)"
-                  sx={{ mb: 1 }}
-                >
-                  {course_name}
-                </Typography>
-                <Typography
-                  fontSize={16}
-                  fontWeight={400}
-                  lineHeight={1.5}
-                  color="var(--secondary-color)"
-                  sx={{ mb: 6 }}
-                >
-                  {description ||
-                    "Launch your career in Data Analytics. Build in-demand skills and gain credentials to go from beginner to job-ready in 8 months or less. No degree or prior experience required."}
-                </Typography>
-              </CardContent>
-              <CardActions
-                sx={{
-                  justifyContent: "space-between",
-                  px: 2,
-                  bgcolor: "var(--secondary-gray-color)",
-                  borderTop: "1px solid #707070",
-                  position: "absolute",
-                  bottom: 0,
-                  left: 0,
-                  width: "100%",
-                }}
-              >
-                <Link
-                  to={`/courses/${url_part}`}
-                  style={{
-                    textDecoration: "none",
-                    color: "var(--secondary-color)",
-                    fontWeight: 500,
-                    fontSize: 16,
+          {courses.map(
+            ({ course_name, description, image, url_part }, index) => {
+              let domain = "https://img.gromindacademy.com";
+              return (
+                <Card
+                  key={index}
+                  elevation={0}
+                  sx={{
+                    maxWidth: 375,
+                    borderRadius: 0,
+                    border: "1px solid #707070",
+                    position: "relative",
                   }}
                 >
-                  Explore more
-                </Link>
-              </CardActions>
-            </Card>
-          )})}
+                  <CardMedia
+                    component="img"
+                    height="194"
+                    image={domain + image}
+                    title={course_name}
+                  />
+                  <CardContent>
+                    <Typography
+                      fontSize={22}
+                      fontWeight={600}
+                      lineHeight={1.5}
+                      color="var(--secondary-color)"
+                      sx={{ mb: 1 }}
+                    >
+                      {course_name}
+                    </Typography>
+                    <Typography
+                      fontSize={16}
+                      fontWeight={400}
+                      lineHeight={1.5}
+                      color="var(--secondary-color)"
+                      sx={{ mb: 6 }}
+                    >
+                      {description ||
+                        "Launch your career in Data Analytics. Build in-demand skills and gain credentials to go from beginner to job-ready in 8 months or less. No degree or prior experience required."}
+                    </Typography>
+                  </CardContent>
+                  <CardActions
+                    sx={{
+                      justifyContent: "space-between",
+                      px: 2,
+                      bgcolor: "var(--secondary-gray-color)",
+                      borderTop: "1px solid #707070",
+                      position: "absolute",
+                      bottom: 0,
+                      left: 0,
+                      width: "100%",
+                    }}
+                  >
+                    <Link
+                      to={`/courses/${url_part}`}
+                      style={{
+                        textDecoration: "none",
+                        color: "var(--secondary-color)",
+                        fontWeight: 500,
+                        fontSize: 16,
+                      }}
+                    >
+                      Explore more
+                    </Link>
+                  </CardActions>
+                </Card>
+              );
+            }
+          )}
         </Stack>
       </Container>
     </Box>

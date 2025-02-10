@@ -73,6 +73,7 @@ const UpcomingEvents = () => {
               clockIcon={clockIcon}
               locationIcon={locationIcon}
               url={event.url_part}
+              eventId={event.event_id}
             />
           ))}
         </Grid>
