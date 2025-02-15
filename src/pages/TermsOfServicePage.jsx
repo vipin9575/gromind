@@ -26,7 +26,7 @@ const TermsOfServicePage = () => {
   return (
     <Box my={4} py={2}>
       <Grid container justifyContent="center">
-        <Grid size={10.5}>
+        <Grid size={9.6}>
           <Typography variant="h6" fontWeight={600} mb={1}>
             Terms of Service
           </Typography>

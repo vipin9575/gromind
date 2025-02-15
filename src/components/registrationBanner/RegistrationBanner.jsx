@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid2";
 // import Timers from "../Timers";
 import CourseRegistrationForm from "../CourseRegistrationForm";
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 const RegistrationBanner = () => {
   const handleFormSubmit = async (formData) => {
@@ -70,17 +70,6 @@ const RegistrationBanner = () => {
           </Grid>
         </Grid>
       </Container>
-      {/* <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      /> */}
     </Box>
   );
 };

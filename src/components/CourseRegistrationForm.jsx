@@ -1,42 +1,20 @@
 import {
   Box,
   Button,
-  Card,
   FormControl,
   FormControlLabel,
   FormHelperText,
-  FormLabel,
   OutlinedInput,
   Radio,
   RadioGroup,
   Stack,
-  Typography,useMediaQuery
+  Typography,
 } from "@mui/material";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-
-const CourseRegistrationForm = ({
-  title = "Register Now !",
-  courseOptions = {
-    Online: [
-      "Tableau and Advanced Excel",
-      "Power BI and Advanced Excel",
-      "Salesforce Developer",
-      "Python and SQL",
-      "Java Developer",
-    ],
-    Offline: [
-      "Database Administrator",
-      "HR Development Program",
-      "HR Business Partnering",
-      "Technical Recruiting",
-      "Digital Marketing & Gen AI",
-    ],
-  },
-  onSubmit,
-}) => {
-  const isMobile = useMediaQuery('(max-width:600px)')
+const CourseRegistrationForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
     full_name: "",
     email: "",
@@ -44,8 +22,23 @@ const CourseRegistrationForm = ({
     subject: "",
     message: "Hi, I am enquiring about xyz",
   });
-
+  const [courses, setCourses] = useState([]);
   const [errors, setErrors] = useState({});
+
+  const fetchCourse = async () => {
+    try {
+      const res = await axios.get("https://api.gromindacademy.com/course/all");
+      if (res.status === 200) {
+        setCourses(res.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCourse();
+  }, []);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -93,7 +86,6 @@ const CourseRegistrationForm = ({
     event.preventDefault();
 
     if (validateForm()) {
-      // console.log(formData);
       onSubmit(formData);
 
       setFormData({
@@ -115,7 +107,7 @@ const CourseRegistrationForm = ({
           fontWeight={500}
           lineHeight={1.5}
         >
-          {title}
+          Register Now !
         </Typography>
       </Box>
       <Box bgcolor={"var(--main-white-color)"} px={2} py={4}>
@@ -170,67 +162,49 @@ const CourseRegistrationForm = ({
             Which Course are you interested in?
           </Typography>
           <Stack
-            direction={{ xs: "column", sm: "row" }}
-            spacing={{ xs: 0, sm: 0 }}
+            p={2}
+            display="flex"
+            flexWrap="wrap"
+            justifyContent="center"
+            bgcolor="#632B900A"
+            mt={2}
+            border={1}
+            borderRadius={1}
+            borderColor="#bbb"
           >
-            {Object.entries(courseOptions).map(([courseType, options]) => (
-              <Card
-                sx={{
-                  flexGrow: 1,
-                  p: 2,
-                  pb: !isMobile ? 2 : courseType === "Online" ? 0 : 2,
-                  pt:!isMobile ? 2 : courseType === "Online" ? 2 : 0,
-                  bgcolor: "#632B900A",
-                  border: "none",
-                }}
-                elevation={0}
-                key={courseType}
+            <FormControl error={!!errors.subject}>
+              <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                name="radio-buttons-group"
+                value={formData.subject}
+                onChange={(e) =>
+                  handleChange({
+                    target: {
+                      name: "subject",
+                      value: e.target.value,
+                    },
+                  })
+                }
               >
-                <FormControl error={!!errors.subject}>
-                  <FormLabel
+                {courses.map((course, index) => (
+                  <FormControlLabel
+                    key={index}
+                    value={course?.course_name}
+                    control={<Radio />}
+                    label={course?.course_name}
                     sx={{
-                      fontSize: 18,
-                      fontWeight: 600,
                       color: "var(--main-gray-color)",
+                      "& .MuiFormControlLabel-label": {
+                        fontSize: "0.9rem",
+                      },
                     }}
-                    id={`radio-group-label-${courseType}`}
-                  >
-                    {/* {courseType} */}
-                  </FormLabel>
-                  <RadioGroup
-                    aria-labelledby={`radio-group-label-${courseType}`}
-                    name={`radio-buttons-group-${courseType}`}
-                    value={formData.subject}
-                    onChange={(e) =>
-                      handleChange({
-                        target: {
-                          name: "subject",
-                          value: e.target.value,
-                        },
-                      })
-                    }
-                  >
-                    {options.map((option, index) => (
-                      <FormControlLabel
-                        key={index}
-                        value={option}
-                        control={<Radio />}
-                        label={option}
-                        sx={{
-                          color: "var(--main-gray-color)",
-                          "& .MuiFormControlLabel-label": {
-                            fontSize: "0.9rem",
-                          },
-                        }}
-                      />
-                    ))}
-                  </RadioGroup>
-                  {errors.subject && (
-                    <FormHelperText>{errors.subject}</FormHelperText>
-                  )}
-                </FormControl>
-              </Card>
-            ))}
+                  />
+                ))}
+              </RadioGroup>
+              {errors.subject && (
+                <FormHelperText>{errors.subject}</FormHelperText>
+              )}
+            </FormControl>
           </Stack>
           <Box display="flex" justifyContent="center" mt={2}>
             <Button
@@ -253,9 +227,7 @@ const CourseRegistrationForm = ({
 };
 
 CourseRegistrationForm.propTypes = {
-  title: PropTypes.string,
-  formFields: PropTypes.array,
-  courseOptions: PropTypes.object,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default CourseRegistrationForm;

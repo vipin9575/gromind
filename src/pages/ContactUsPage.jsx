@@ -18,10 +18,9 @@ import {
 import RegistrationBanner from "../components/registrationBanner/RegistrationBanner";
 import PopularCourses from "../components/popularCourses/PopularCourses";
 import Grid from "@mui/material/Grid2";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-
 
 const courseOptions = {
   Online: [
@@ -48,8 +47,23 @@ const ContactUsPage = () => {
     subject: "",
     message: "Hi, I am enquiring about xyz",
   });
-
+  const [courses, setCourses] = useState([]);
   const [errors, setErrors] = useState({});
+
+  const fetchCourse = async () => {
+    try {
+      const res = await axios.get("https://api.gromindacademy.com/course/all");
+      if (res.status === 200) {
+        setCourses(res.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCourse();
+  }, []);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -185,7 +199,7 @@ const ContactUsPage = () => {
                     <TextField
                       fullWidth
                       variant="outlined"
-                      placeholder="you@Compay.com"
+                      placeholder="Email Id"
                       name="email"
                       value={formData.email || ""}
                       onChange={handleChange}
@@ -232,60 +246,50 @@ const ContactUsPage = () => {
                 >
                   Which Course are you interested in?
                 </Typography>
-                <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
-                  {Object.entries(courseOptions).map(
-                    ([courseType, options]) => (
-                      <Card
-                        sx={{
-                          flexGrow: 1,
-                          p: 2,
-                          bgcolor: "#632B900A",
-                          border: "1px solid #BBBBBB",
-                        }}
-                        elevation={0}
-                        key={courseType}
-                      >
-                        <FormControl error={!!errors.subject}>
-                          <FormLabel
-                            sx={{
-                              fontSize: 18,
-                              fontWeight: 700,
-                              color: "var(--main-gray-color)",
-                            }}
-                            id={`radio-group-label-${courseType}`}
-                          >
-                            {/* {courseType} */}
-                          </FormLabel>
-                          <RadioGroup
-                            aria-labelledby={`radio-group-label-${courseType}`}
-                            name={`radio-buttons-group-${courseType}`}
-                            value={formData.subject}
-                          >
-                            {options.map((option, index) => (
-                              <FormControlLabel
-                                key={index}
-                                value={option}
-                                control={<Radio />}
-                                label={option}
-                                sx={{ color: "var(--main-gray-color)" }}
-                                onChange={(e) =>
-                                  handleChange({
-                                    target: {
-                                      name: "subject",
-                                      value: e.target.value,
-                                    },
-                                  })
-                                }
-                              />
-                            ))}
-                          </RadioGroup>
-                          {errors.subject && (
-                            <FormHelperText>{errors.subject}</FormHelperText>
-                          )}
-                        </FormControl>
-                      </Card>
-                    )
-                  )}
+                <Stack
+                  p={2}
+                  display="flex"
+                  flexWrap="wrap"
+                  justifyContent="center"
+                  bgcolor="#632B900A"
+                  mt={2}
+                  border={1}
+                  borderRadius={1}
+                  borderColor="#bbb"
+                >
+                  <FormControl error={!!errors.subject}>
+                    <RadioGroup
+                      aria-labelledby="demo-radio-buttons-group-label"
+                      name="radio-buttons-group"
+                      value={formData.subject}
+                      onChange={(e) =>
+                        handleChange({
+                          target: {
+                            name: "subject",
+                            value: e.target.value,
+                          },
+                        })
+                      }
+                    >
+                      {courses.map((course, index) => (
+                        <FormControlLabel
+                          key={index}
+                          value={course?.course_name}
+                          control={<Radio />}
+                          label={course?.course_name}
+                          sx={{
+                            color: "var(--main-gray-color)",
+                            "& .MuiFormControlLabel-label": {
+                              fontSize: "0.9rem",
+                            },
+                          }}
+                        />
+                      ))}
+                    </RadioGroup>
+                    {errors.subject && (
+                      <FormHelperText>{errors.subject}</FormHelperText>
+                    )}
+                  </FormControl>
                 </Stack>
                 <Box display="flex" mt={2}>
                   <Button
@@ -314,7 +318,7 @@ const ContactUsPage = () => {
                       color="inherit"
                       underline="hover"
                     >
-                      hr@gromindacademy.com 
+                      hr@gromindacademy.com
                     </Link>
                   </Typography>
                 </Grid>

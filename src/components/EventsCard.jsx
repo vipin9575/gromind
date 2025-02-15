@@ -16,7 +16,6 @@ const EventsCard = ({
   url,
   eventId,
 }) => {
-  console.log(eventId)
   const navigate = useNavigate();
   return (
     <Grid
