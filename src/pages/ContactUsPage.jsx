@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Card,
   Container,
   Divider,
   FormControl,
@@ -13,6 +12,7 @@ import {
   RadioGroup,
   Stack,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import RegistrationBanner from "../components/registrationBanner/RegistrationBanner";
@@ -21,23 +21,8 @@ import Grid from "@mui/material/Grid2";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-
-const courseOptions = {
-  Online: [
-    "Tableau and Advanced Excel",
-    "Power BI and Advanced Excel",
-    "Salesforce Developer",
-    "Python and SQL",
-    "Java Developer",
-  ],
-  Offline: [
-    "Database Administrator",
-    "HR Development Program",
-    "HR Business Partnering",
-    "Technical Recruiting",
-    "Digital Marketing & Gen AI",
-  ],
-};
+import { motion } from "framer-motion";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
 const ContactUsPage = () => {
   const [formData, setFormData] = useState({
@@ -136,26 +121,45 @@ const ContactUsPage = () => {
 
   return (
     <Box mt={28}>
-      {/* <AboutUs isFullPage={true} /> */}
       <Box component="form" onSubmit={handleSubmit}>
         <Container maxWidth="lg">
-          <Box textAlign="left" mb={4}>
-            <Typography
-              fontSize={40}
-              fontWeight={600}
-              color="rgba(99, 43, 144, 1)"
-            >
-              Contact Us
-            </Typography>
-            <Divider
-              sx={{
-                width: { md: 145, sm: 100, xs: 50 },
-                height: 4,
-                bgcolor: "var(--secondary-color)",
-                mt: 1,
-              }}
-            />
-          </Box>
+          <Stack direction="row" justifyContent="space-between">
+            <Box textAlign="left" mb={4}>
+              <Typography
+                fontSize={{ xs: 24, sm: 32, md: 40 }}
+                fontWeight={600}
+                color="var(--primary-color)"
+              >
+                Contact Us
+              </Typography>
+              <Divider
+                sx={{
+                  width: { md: 145, sm: 100, xs: 50 },
+                  height: 4,
+                  bgcolor: "var(--secondary-color)",
+                  mt: 1,
+                }}
+              />
+            </Box>
+            <Tooltip title="Chat on WhatsApp" placement="left-start" arrow>
+              <motion.div
+                initial={{ scale: 1 }}
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 1, repeat: Infinity }}
+              >
+                <Link
+                  href="https://wa.me/919266464133/?text=Hello%20groMind%20Academy"
+                  aria-label="Chat on WhatsApp"
+                  alignSelf={{ xs: "end", md: "center" }}
+                  sx={{ display: { xs: "block", sm: "none" }, mt: 2 }}
+                >
+                  <WhatsAppIcon
+                    sx={{ fontSize: 30, fill: "var(--main-green-color)" }}
+                  />
+                </Link>
+              </motion.div>
+            </Tooltip>
+          </Stack>
           <Grid container spacing={2} justifyContent="space-between">
             <Grid size={{ xs: 12, sm: 7 }}>
               <Grid container spacing={2}>

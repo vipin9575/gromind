@@ -1,15 +1,42 @@
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Divider, Stack, Tooltip, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import { motion } from "framer-motion";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import { Link } from "react-router-dom";
 
 const BlogsPage = () => {
   return (
     <Box my={4} py={2}>
       <Grid container justifyContent="center">
         <Grid size={9.6}>
-          <Typography variant="h6" fontWeight={600} mb={1}>
-            Why Upskilling and Reskilling are crucial for the professionals in
-            the VUCA World
-          </Typography>
+          <Stack
+            textAlign="left"
+            direction="row"
+            justifyContent="space-between"
+          >
+            <Typography variant="h6" fontWeight={600} mb={1}>
+              Why Upskilling and Reskilling are crucial for the professionals in
+              the VUCA World
+            </Typography>
+            <Tooltip title="Chat on WhatsApp" placement="left-start" arrow>
+              <motion.div
+                initial={{ scale: 1 }}
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 1, repeat: Infinity }}
+              >
+                <Link
+                  href="https://wa.me/919266464133/?text=Hello%20groMind%20Academy"
+                  aria-label="Chat on WhatsApp"
+                  alignSelf={{ xs: "end", md: "center" }}
+                  sx={{ display: { xs: "block", sm: "none" }, mt: 2 }}
+                >
+                  <WhatsAppIcon
+                    sx={{ fontSize: 30, fill: "var(--main-green-color)" }}
+                  />
+                </Link>
+              </motion.div>
+            </Tooltip>
+          </Stack>
           <Typography variant="body1" fontWeight={300} mb={2}>
             In the rapidly evolving job market, especially in India’s IT sector,
             the need for <b>upskilling</b> and <b>reskilling</b> has never been

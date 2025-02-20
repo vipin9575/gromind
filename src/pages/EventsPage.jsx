@@ -6,9 +6,11 @@ import {
   FormControl,
   FormHelperText,
   FormLabel,
+  Link,
   List,
   Stack,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
@@ -19,6 +21,8 @@ import axios from "axios";
 import Loader from "../components/Loader";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { toast } from "react-toastify";
+import { motion } from "framer-motion";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
 const formattedDate = (dateString) =>
   moment(dateString).format("MMMM D, YYYY h:mm A");
@@ -135,10 +139,11 @@ const EventsPage = () => {
         <>
           <Box
             sx={{
-              width: "100vw",
+              width: "100%",
               height: "60vh",
               backgroundImage: `url(https://img.gromindacademy.com${events[0]?.image})`,
-              backgroundSize: "cover",
+              backgroundSize: "contain",
+              backgroundRepeat: "no-repeat",
               backgroundPosition: {
                 xs: "center",
                 sm: "end",
@@ -162,13 +167,40 @@ const EventsPage = () => {
                   >
                     {events[0]?.event_name}
                   </Typography>
-                  <Typography
-                    variant="h5"
-                    color="var( --main-gray-color)"
-                    sx={{ mb: 2 }}
-                  >
-                    {events[0]?.short_desc}
-                  </Typography>
+                  <Stack direction="row" justifyContent="space-between">
+                    <Typography
+                      variant="h5"
+                      color="var( --main-gray-color)"
+                      sx={{ mb: 2 }}
+                    >
+                      {events[0]?.short_desc}
+                    </Typography>
+                    <Tooltip
+                      title="Chat on WhatsApp"
+                      placement="left-start"
+                      arrow
+                    >
+                      <motion.div
+                        initial={{ scale: 1 }}
+                        animate={{ scale: [1, 1.2, 1] }}
+                        transition={{ duration: 1, repeat: Infinity }}
+                      >
+                        <Link
+                          href="https://wa.me/919266464133/?text=Hello%20groMind%20Academy"
+                          aria-label="Chat on WhatsApp"
+                          alignSelf={{ xs: "end", md: "center" }}
+                          sx={{ display: { xs: "block", sm: "none" }, mt: 1 }}
+                        >
+                          <WhatsAppIcon
+                            sx={{
+                              fontSize: 30,
+                              fill: "var(--main-green-color)",
+                            }}
+                          />
+                        </Link>
+                      </motion.div>
+                    </Tooltip>
+                  </Stack>
                   <Stack direction="row" spacing={2} mb={2}>
                     <Typography
                       variant="body1"

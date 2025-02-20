@@ -1,10 +1,20 @@
 import { useEffect, useState } from "react";
 import "./CouresPage.css";
-import { Box, Divider, Container, Typography } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Container,
+  Typography,
+  Stack,
+  Tooltip,
+  Link,
+} from "@mui/material";
 import axios from "axios";
 import parse from "html-react-parser";
 import { useLocation, useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
+import { motion } from "framer-motion";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
 const CouresPage = () => {
   const [loading, setLoading] = useState(true);
@@ -63,31 +73,55 @@ const CouresPage = () => {
     );
   };
   return (
-    <Box>
+    <Box mt={28}>
       {loading ? (
         <Loader />
       ) : (
         <Container>
-          <Box textAlign="left">
-            <Typography
-              fontSize={40}
-              fontWeight={600}
-              color="rgba(99, 43, 144, 1)"
-            >
-              What We Offer?
-            </Typography>
-            <Divider
-              sx={{
-                width: 145,
-                height: 2,
-                bgcolor: "rgba(0, 0, 0, 1)",
-                borderBottomWidth: 2,
-              }}
-            />
-            <Typography fontSize={20} fontWeight={400} color="#000" mt={4}>
-              Online & Offline
-            </Typography>
-          </Box>
+          <Stack
+            textAlign="left"
+            direction="row"
+            justifyContent="space-between"
+          >
+            <Box textAlign="left">
+              <Typography
+                fontSize={{ xs: 24, sm: 32, md: 40 }}
+                fontWeight={600}
+                color="var(--primary-color)"
+              >
+                What We Offer?
+              </Typography>
+              <Divider
+                sx={{
+                  width: 145,
+                  height: 2,
+                  bgcolor: "rgba(0, 0, 0, 1)",
+                  borderBottomWidth: 2,
+                }}
+              />
+              <Typography fontSize={20} fontWeight={400} color="#000" mt={4}>
+                Online & Offline
+              </Typography>
+            </Box>
+            <Tooltip title="Chat on WhatsApp" placement="left-start" arrow>
+              <motion.div
+                initial={{ scale: 1 }}
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 1, repeat: Infinity }}
+              >
+                <Link
+                  href="https://wa.me/919266464133/?text=Hello%20groMind%20Academy"
+                  aria-label="Chat on WhatsApp"
+                  alignSelf={{ xs: "end", md: "center" }}
+                  sx={{ display: { xs: "block", sm: "none" }, mt: 2 }}
+                >
+                  <WhatsAppIcon
+                    sx={{ fontSize: 30, fill: "var(--main-green-color)" }}
+                  />
+                </Link>
+              </motion.div>
+            </Tooltip>
+          </Stack>
           <Box
             className="tabs"
             justifyContent={{ xs: "center", md: "flex-start" }}
